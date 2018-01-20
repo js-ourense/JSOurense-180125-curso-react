@@ -14,7 +14,7 @@ class Main extends Component {
           <Route path='/:slug' component={Post} />
         </Switch>
       </main>
-    );
+    )
   }
 }
 
