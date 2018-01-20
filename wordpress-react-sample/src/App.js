@@ -10,7 +10,7 @@ class App extends Component {
       <div className="app">
         <Header />
         <Main />
-        <Footer />
+        <Footer year="2008" />
       </div>
     )
   }

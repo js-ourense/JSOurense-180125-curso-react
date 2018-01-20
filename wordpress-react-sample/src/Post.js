@@ -15,12 +15,14 @@ class Post extends Component {
     helpers.getPost(this.props.match.params.slug).then(
       (result) => {
         let post = result.data[0]
-        console.log(post)
-        this.setState({
-          title: post.title.rendered,
-          date: post.date,
-          body: post.excerpt.rendered
-        })
+        // console.log(post)
+        if (post && post.id) {
+          this.setState({
+            title: post.title.rendered,
+            date: post.date,
+            body: post.excerpt.rendered
+          })
+        }
       }
     )
   }

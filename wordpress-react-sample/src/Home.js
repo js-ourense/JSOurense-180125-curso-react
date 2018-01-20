@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import helpers from './Helpers'
 import { Link } from 'react-router-dom'
+import Pagination from './Pagination'
 
 class Home extends Component {
 
@@ -12,19 +13,37 @@ class Home extends Component {
       totalPosts: 0,
       posts: []
     }
+    // console.log(this.state)
+  }
+
+  getThePosts(page) {
+    helpers.getPosts(page).then(
+      (result) => {
+        // console.log(result.data)
+        if (result && result.data) {
+          this.setState({
+            currentPage: page,
+            totalPages: result.headers['x-wp-totalpages'],
+            totalPosts: result.headers['x-wp-total'],
+            posts: result.data
+          })
+        }
+      }
+    )
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let page = nextProps.match.params.number || 1
+    let currentPage = this.state.currentPage
+    if (page.toString() !== currentPage.toString()) {
+      this.getThePosts(page)
+    }
   }
 
   componentDidMount() {
-    helpers.getPosts().then(
-      (result) => {
-        // console.log(result)
-        this.setState({
-          totalPages: result.headers['x-wp-totalpages'],
-          totalPosts: result.headers['x-wp-total'],
-          posts: result.data
-        })
-      }
-    )
+    let page = this.props.match.params.number || 1
+    // console.log(page)
+    this.getThePosts(page)
   }
 
   render() {
@@ -40,6 +59,7 @@ class Home extends Component {
         <p>totalPages: {this.state.totalPages}</p>
         <p>totalPosts: {this.state.totalPosts}</p>
         <ul>{listPosts}</ul>
+        <Pagination pages={`${this.state.totalPages}`} />
       </div>
     )
   }
