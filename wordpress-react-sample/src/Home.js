@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import helpers from './Helpers'
-import { Link } from 'react-router-dom'
 import Pagination from './Pagination'
+import config from './config'
+import chunk from 'lodash/chunk'
+import Post from './Post'
 
 class Home extends Component {
 
@@ -48,18 +50,21 @@ class Home extends Component {
 
   render() {
 
-    const posts = this.state.posts
-    const listPosts = posts.map((post) =>
-      <li key={post.id.toString()}><Link to={`/${post.slug}`}>{post.title.rendered}</Link></li>
+    const rows = chunk(this.state.posts, config.numOfPostsPerRow)
+    const listPosts = rows.map((row, index) =>
+      <div key={index} className="w3-row-padding w3-padding-16 w3-center">
+          {
+            row.map((col) => (
+              <Post key={col.id} title={col.title.rendered} slug={col.slug} date={col.date} />
+            ))
+          }
+      </div>
     )
 
     return (
       <div>
-        <p>currentPage: {this.state.currentPage}</p>
-        <p>totalPages: {this.state.totalPages}</p>
-        <p>totalPosts: {this.state.totalPosts}</p>
-        <ul>{listPosts}</ul>
-        <Pagination pages={`${this.state.totalPages}`} />
+        <Pagination currentPage={`${this.state.currentPage}`} totalPages={`${this.state.totalPages}`} />
+        {listPosts}
       </div>
     )
   }

@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import './App.css'
+import './Main.css'
 import Header from './Header'
 import Main from './Main'
-import Footer from './Footer'
 
 class App extends Component {
   render() {
     return (
-      <div className="app">
+      <div>
         <Header />
         <Main />
-        <Footer year="2008" />
       </div>
     )
   }

@@ -1,37 +1,18 @@
 import React, { Component } from 'react'
-import helpers from './Helpers'
+import { Link } from 'react-router-dom'
+import shortid from 'shortid'
+
+const postStyle = {
+  'width': '100%'
+}
 
 class Post extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: '',
-      date: '',
-      body: ''
-    }
-  }
-
-  componentDidMount() {
-    helpers.getPost(this.props.match.params.slug).then(
-      (result) => {
-        let post = result.data[0]
-        // console.log(post)
-        if (post && post.id) {
-          this.setState({
-            title: post.title.rendered,
-            date: post.date,
-            body: post.excerpt.rendered
-          })
-        }
-      }
-    )
-  }
   render() {
+    const now = shortid.generate()
     return (
-      <div>
-        <h1>{this.state.title}</h1>
-        <p>{this.state.date}</p>
-        <div dangerouslySetInnerHTML={{ __html: this.state.body }} />
+      <div className="w3-quarter">
+        <img src={"https://loremflickr.com/g/447/675/kitties?rand="+now} alt="{this.props.slug}" style={postStyle} />
+        <h3><Link to={`/${this.props.slug}`}>{this.props.title}</Link></h3>
       </div>
     );
   }

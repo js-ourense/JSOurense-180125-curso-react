@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+const HeaderStyle = {
+	'maxWidth': '1200px',
+	'margin': 'auto'
+}
+
 class Header extends Component {
 	render() {
 		return (
-			<header>
-				<nav>
-					<ul>
-						<li><Link to='/'>Home</Link></li>
-						<li><Link to='/about'>About</Link></li>
-					</ul>
-				</nav>
-			</header>
+			<div className="w3-top">
+				<div className="w3-white w3-xlarge" style={HeaderStyle}>
+					<div className="w3-button w3-padding-16 w3-left">
+						<Link to='/'>Curso de React.JS</Link>
+					</div>
+					<div className="w3-button w3-right w3-padding-16">
+						<Link to='/about'>About</Link>
+					</div>
+				</div>
+			</div>
 		)
 	}
 }

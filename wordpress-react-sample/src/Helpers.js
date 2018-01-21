@@ -1,12 +1,14 @@
 import axios from 'axios'
+import config from './config'
 
-const baseURL = 'http://91.116.164.183:8092/wp-json/wp/v2/'
+const baseURL = config.baseURL
+const perPage = config.perPage
 
 const helpers = {
 
   getPosts: (page) => {
     let getPage = page || 1
-    return axios.get(baseURL + 'posts?page='+getPage)
+    return axios.get(baseURL + 'posts?page='+getPage+'&per_page='+perPage)
   },
 
   getPost: (slug) => {
